@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 namespace INF_Seminararbeit
 {
     public partial class Form1 : Form, IMessageFilter
@@ -20,17 +21,20 @@ namespace INF_Seminararbeit
         //Variables general
         DateTime startTime;
         int penalty=0;
-        int carSpeedMax = -5;
+        int carSpeedMax = -3;
         int carSpeed = 0;
+        int carSpeed_tmp = 0;
         int carSpeedMaxMerker = 0;
         int carAcceleration = 1;
         int carAngle = 90;
+        int carStyle = 1;
         int carPictureAngle = 90;
         int obstacleSpeed = -1;
+        int obstacleSpeed_tmp = 0;
         bool accelerateCones = false;
         bool isRunning = false;
-        int carStyle = 1;
         bool reset = false;
+        bool restart = false;
         bool crashSituation = false;
         bool slalomDirection = false;  //False:left true:right
         PictureBox finish;
@@ -39,18 +43,75 @@ namespace INF_Seminararbeit
         int coneNumber = 7;
         int coneDistance = 400;
         int indexNextCone=0;
+        bool obstaclesPlaced = false;
         List<PictureBox> listOfCones = new List<PictureBox>();
 
         //Splines
-        Point[] left = { };
-        Point[] right = { };
+        private List<Point> left = new List<Point>();
+        private List<Point> right = new List<Point>();
 
         public Form1()
         {
             InitializeComponent();
             Application.AddMessageFilter(this);
             carStandardImage = pbCar.Image;
+            this.BackColor = Color.LimeGreen;
+            this.TransparencyKey = Color.LimeGreen;
         }
+
+        ///////////////////
+        ///// Timers /////
+        //////////////////
+        private void tmrGameTime_Tick(object sender, EventArgs e)
+        {
+            MoveCar();
+            moveObstacles();
+            RotateCarPicture();
+            slalomCheck();
+
+            //Crashdetection
+            if (checkCrash() && !crashSituation)
+            {
+                crashSituation = true;
+                carSpeedMaxMerker = carSpeedMax;
+                carSpeedMax = -1;
+                carSpeed = -1;
+                tmrHitObstacle.Enabled = true;
+                pgbBoost.Value = 0;
+            }
+
+            //Finish
+            if (pbCar.Bounds.IntersectsWith(finish.Bounds))
+            {
+                Finish();
+            }
+        }
+        private void tmrClock_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = (DateTime.Now - startTime).ToString();
+        }
+        private void tmrBoost_Tick(object sender, EventArgs e)
+        {
+            carSpeedMax = carSpeedMaxMerker;
+            carSpeedMaxMerker = 0;
+            carSpeed = carSpeedMax;
+            tmrBoost.Enabled = false;
+            pgbBoost.Value = 100;
+            lblBoost.Text = "Boost";
+        }
+        private void tmrHitObstacle_Tick(object sender, EventArgs e)
+        {
+            crashSituation = false;
+            carSpeedMax = carSpeedMaxMerker;
+            carSpeedMaxMerker = 0;
+            tmrHitObstacle.Enabled = false;
+            pgbBoost.Value = 100;
+        }
+
+
+        ////////////////////////
+        ///// Key Strokes /////
+        ///////////////////////
         public bool PreFilterMessage(ref Message m)
         {
             Keys keyCode = (Keys)(int)m.WParam & Keys.KeyCode;
@@ -89,18 +150,25 @@ namespace INF_Seminararbeit
                     carSpeedMax = -10;
                     carSpeed = -10;
                     tmrBoost.Enabled = true;
-                }                
+                    pgbBoost.Value = 0;
+                }
                 return true;
             }
-
             return false;
         }
+
+
+        /////////////////////
+        ///// Obstacles /////
+        /////////////////////
         private void placeObstacles()
         {
+            left.Add(new Point(pbCar.Left - 20, pbCar.Top-20));
+            right.Add( new Point(pbCar.Left + pbCar.Width+ 20, pbCar.Top - 20));
             Random rnd = new Random();
             for (int i = 0; i < coneNumber; i++)                
             {
-                int x= rnd.Next(50, 530);
+                int x= rnd.Next(150, 500);
                 var picture = new PictureBox
                 {
                     Name = "pbCone" + i.ToString(),
@@ -109,9 +177,17 @@ namespace INF_Seminararbeit
                     Image = INF_Seminararbeit.Properties.Resources.cone,
                     SizeMode = PictureBoxSizeMode.StretchImage,   
                 };
-                //left[i] = new Point(x, 00 - i * coneDistance);
-                //right[i] = new Point(x+200, 00 - i * coneDistance);
-                panelGame.Controls.Add(picture);
+                if(i%2==0)
+                {
+                    left.Add(new Point(x-150, 100 - i * coneDistance+17));
+                    right.Add(new Point(x, 100 - i * coneDistance+17));
+                }
+                if(i%2==1)
+                {                    
+                    left.Add(new Point(x+35, 100 - i * coneDistance + 17));
+                    right.Add(new Point(x + 185, 100 - i * coneDistance + 17));
+                }                
+                pbGame.Controls.Add(picture);
                 listOfCones.Add(picture);
 
                 finish = new PictureBox
@@ -122,8 +198,12 @@ namespace INF_Seminararbeit
                     Image = INF_Seminararbeit.Properties.Resources.finishLine,
                     SizeMode = PictureBoxSizeMode.StretchImage,
                 };
-                panelGame.Controls.Add(finish);
-            }   
+                pbGame.Controls.Add(finish);
+            }
+            left.Add(new Point(250, -2650));
+            right.Add(new Point(400, -2650));
+            obstaclesPlaced = true;
+            pbGame.Refresh();
         }
         private void moveObstacles()
         {
@@ -135,11 +215,25 @@ namespace INF_Seminararbeit
             }
             for(int i=0;i<listOfCones.Count ; i++)
             {
-                listOfCones[i].Top -= coneSpeed;
+                listOfCones[i].Top -= coneSpeed;           
+            }
+            for(int i=0;i<left.Count;i++)
+            {
+                left[i] = new Point(left[i].X, left[i].Y - coneSpeed);
+            }
+            for (int i = 0; i < right.Count; i++)
+            {
+                right[i] = new Point(right[i].X, right[i].Y - coneSpeed);
             }
             pbStart.Top -= coneSpeed;
             finish.Top -= coneSpeed;
+            pbGame.Refresh();
         }
+
+
+        ///////////////////
+        /////// Car ///////
+        ///////////////////
         private Bitmap RotateImageByAngle(Image oldBitmap, float angle)
         {
             var newBitmap = new Bitmap(oldBitmap.Width, oldBitmap.Height);
@@ -156,30 +250,6 @@ namespace INF_Seminararbeit
         {
             return (Math.PI/180) * degr;
         }
-
-        private void tmrGameTime_Tick(object sender, EventArgs e)
-        {
-            //Move
-            MoveCar();
-            moveObstacles();
-            RotateCarPicture();
-            //Crashdetection
-            if(checkCrash()&&!crashSituation)
-            {
-                crashSituation = true;
-                carSpeedMaxMerker = carSpeedMax;
-                carSpeedMax = -1;
-                carSpeed = -1;
-                tmrHitObstacle.Enabled = true;
-            }
-            //Slalom
-            slalomCheck();
-            //Finish
-            if (pbCar.Bounds.IntersectsWith(finish.Bounds))
-            {
-                Finish();
-            }  
-        }
         private void MoveCar()
         {
             int carMovementX = 0;
@@ -190,7 +260,7 @@ namespace INF_Seminararbeit
             {
                 pbCar.Left += carMovementX;
             }
-            if ((carMovementY + pbCar.Height + pbCar.Top) < panelGame.Height && (pbCar.Top + carMovementY) >200 )
+            if ((carMovementY + pbCar.Height + pbCar.Top) < pbGame.Height && (pbCar.Top + carMovementY) >200 )
             {
                 pbCar.Top += carMovementY;
                 accelerateCones = false;
@@ -216,6 +286,11 @@ namespace INF_Seminararbeit
                 }
             }
         }
+
+
+        ///////////////////////////////
+        // Crash & Slalom Detection //
+        //////////////////////////////
         private bool checkCrash()
         {
             for (int i = 0; i < listOfCones.Count; i++)
@@ -227,98 +302,12 @@ namespace INF_Seminararbeit
             }
             return false;
         }
-        private void btnChangeCar_Click(object sender, EventArgs e)
-        {
-            if (!isRunning)
-            {
-                if (carStyle == 3)
-                {
-                    pbCar.Image = INF_Seminararbeit.Properties.Resources.car1;
-                    pbCar.Refresh();
-                    carSpeedMax = -8;
-                    carAcceleration = 3;
-                    carStyle = 1;
-                    reset = true;
-                    btnChangeCar.Text = "Car Model: " + carStyle.ToString();
-                }
-
-                if (carStyle == 2)
-                {
-                    pbCar.Image = INF_Seminararbeit.Properties.Resources.car3;
-                    pbCar.Refresh();
-                    carSpeedMax = -5;
-                    carAcceleration = 2;
-                    carStyle += 1;
-                    btnChangeCar.Text = "Car Model: " + carStyle.ToString();
-                }
-
-                if (carStyle == 1 && reset == false)
-                {
-                    pbCar.Image = INF_Seminararbeit.Properties.Resources.car2; ;
-                    pbCar.Refresh();
-                    carSpeedMax = -3;
-                    carAcceleration = 1;
-                    carStyle += 1;
-                    btnChangeCar.Text = "Car Model: " + carStyle.ToString();
-                }
-                reset = false;
-                carStandardImage = pbCar.Image;
-            }
-        }
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            if(btnStart.Text == "Restart")
-            {
-                Application.Restart();
-                Environment.Exit(0);
-            }
-            if (!isRunning)
-            {
-                tmrGameTime.Start();
-                placeObstacles();
-                startTime = DateTime.Now;
-                tmrClock.Start();
-                isRunning = true;
-                btnStart.Text = "Stop";
-            }
-            else {
-                tmrGameTime.Stop();
-                tmrClock.Stop();
-                btnStart.Text = "Start";
-                isRunning = false;
-            }
-        }
-        private void tmrClock_Tick(object sender, EventArgs e)
-        {
-            lblTime.Text = (DateTime.Now - startTime).ToString();
-        }
-
-        private void Finish()
-        {
-            tmrClock.Stop();
-            lblTimeHeading.Text = "Finished in:";
-            lblTimeHeading.ForeColor = Color.Green;
-            lblTime.ForeColor = Color.Green;
-            btnStart.Text = "Restart";
-
-            carSpeed = 0;
-            carSpeedMax = 0;
-            obstacleSpeed = 0;
-        }
-        private void tmrHitObstacle_Tick(object sender, EventArgs e)
-        {
-            crashSituation = false;
-            carSpeedMax = carSpeedMaxMerker;
-            carSpeedMaxMerker = 0;
-            tmrHitObstacle.Enabled = false;
-        }
         private void slalomCheck()
         {
-            
-            if(getNearestCone()==indexNextCone && distanceNearestCone(getNearestCone())<10)
+            if (getNearestCone() == indexNextCone && distanceNearestCone(getNearestCone()) < 10)
             {
                 int coneleft = listOfCones[getNearestCone()].Left;
-                int coneright = listOfCones[getNearestCone()].Left+ listOfCones[getNearestCone()].Width;
+                int coneright = listOfCones[getNearestCone()].Left + listOfCones[getNearestCone()].Width;
                 if (!crashSituation)
                 {
                     if (slalomDirection)
@@ -354,16 +343,15 @@ namespace INF_Seminararbeit
                     lblPenalty.Text = "Penalty: " + penalty.ToString() + "s";
                 }
                 indexNextCone++;
-                                
             }
         }
         private int getNearestCone()
         {
-            int index=0;
+            int index = 0;
             int mindistance = Math.Abs(listOfCones[0].Top - pbCar.Top);
             for (int i = 0; i < coneNumber; i++)
             {
-                if(mindistance > Math.Abs(listOfCones[i].Top - pbCar.Top))
+                if (mindistance > Math.Abs(listOfCones[i].Top - pbCar.Top))
                 {
                     mindistance = Math.Abs(listOfCones[i].Top - pbCar.Top);
                     index = i;
@@ -381,35 +369,130 @@ namespace INF_Seminararbeit
             return image;
         }
 
-        private void tmrBoost_Tick(object sender, EventArgs e)
+
+        ///////////////////////////////
+        //// Button Click Events ////
+        //////////////////////////////
+        private void btnStart_Click(object sender, EventArgs e)
         {
-            carSpeedMax = carSpeedMaxMerker;
-            carSpeedMaxMerker = 0;
-            carSpeed = carSpeedMax;
-            tmrBoost.Enabled = false;
+            if (btnStart.Text == "Restart")
+            {
+                Application.Restart();
+                Environment.Exit(0);
+            }
+            if (isRunning)
+            {
+                if (restart)
+                {
+                    tmrClock.Start();
+                    obstacleSpeed = obstacleSpeed_tmp;
+                    carSpeed = carSpeed_tmp;
+                    btnStart.Text = "Pause";
+                    restart = false;
+                }
+                else
+                {
+                    obstacleSpeed_tmp = obstacleSpeed;
+                    carSpeed_tmp = carSpeed;
+                    obstacleSpeed = 0;
+                    carSpeed = 0;
+                    tmrClock.Stop();
+                    btnStart.Text = "Resume";
+                    restart = true;
+                }
+            }
+            else
+            {
+                startTime = DateTime.Now;
+                tmrGameTime.Start();
+                placeObstacles();
+                tmrClock.Start();
+                isRunning = true;
+                btnStart.Text = "Pause";
+            }
+        }
+        private void btnChangeCar_Click(object sender, EventArgs e)
+        {
+            if (!isRunning)
+            {
+                if (carStyle == 3)
+                {
+                    pbCar.Image = INF_Seminararbeit.Properties.Resources.car1;
+                    pbCar.Refresh();
+                    carSpeedMax = -3;
+                    carAcceleration = 1;
+                    carStyle = 1;
+                    reset = true;
+                    btnChangeCar.Text = "Car Model: " + carStyle.ToString();
+                }
+
+                if (carStyle == 2)
+                {
+                    pbCar.Image = INF_Seminararbeit.Properties.Resources.car3;
+                    pbCar.Refresh();
+                    carSpeedMax = -8;
+                    carAcceleration = 3;
+                    carStyle += 1;
+                    btnChangeCar.Text = "Car Model: " + carStyle.ToString();
+                }
+
+                if (carStyle == 1 && reset == false)
+                {
+                    pbCar.Image = INF_Seminararbeit.Properties.Resources.car2; ;
+                    pbCar.Refresh();
+                    carSpeedMax = -5;
+                    carAcceleration = 2;
+                    carStyle += 1;
+                    btnChangeCar.Text = "Car Model: " + carStyle.ToString();
+                }
+                reset = false;
+                carStandardImage = pbCar.Image;
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        ///////////////////
+        ///// Splines /////
+        //////////////////
+        protected void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            // Create the message dialog and set its content
-            var messageDialog = new MessageDialog("No internet connection has been found.");
+            if (obstaclesPlaced)
+            {
+                GraphicsPath leftpath = new GraphicsPath();
+                GraphicsPath rightpath = new GraphicsPath();
 
-            // Add commands and set their callbacks; both buttons use the same callback function instead of inline event handlers
-            messageDialog.Commands.Add(new UICommand(
-                "Try again",
-                new UICommandInvokedHandler(this.CommandInvokedHandler)));
-            messageDialog.Commands.Add(new UICommand(
-                "Close",
-                new UICommandInvokedHandler(this.CommandInvokedHandler)));
+                leftpath.AddCurve(left.ToArray());
+                leftpath.AddLine(left[coneNumber + 1], new Point(0, left[coneNumber + 1].Y));
+                leftpath.AddLine(new Point(0, left[coneNumber + 1].Y), new Point(0, left[0].Y));
+                leftpath.AddLine(new Point(0, left[0].Y), left[0]);
+                e.Graphics.FillPath(Brushes.Green, leftpath);
+                e.Graphics.DrawPath(Pens.Gray, leftpath);
 
-            // Set the command that will be invoked by default
-            messageDialog.DefaultCommandIndex = 0;
-
-            // Set the command to be invoked when escape is pressed
-            messageDialog.CancelCommandIndex = 1;
-
-            // Show the message dialog
-            await messageDialog.ShowAsync();
+                rightpath.AddCurve(right.ToArray());
+                rightpath.AddLine(right[coneNumber + 1], new Point(1350, right[coneNumber + 1].Y));
+                rightpath.AddLine(new Point(1350, right[coneNumber + 1].Y), new Point(1350, right[0].Y));
+                rightpath.AddLine(new Point(1350, right[0].Y), right[0]);
+                e.Graphics.FillPath(Brushes.Green, rightpath);
+                e.Graphics.DrawPath(Pens.Gray, rightpath);
+            }
         }
+
+
+        ///////////////////
+        ///// Finish /////
+        //////////////////
+        private void Finish()
+        {
+            tmrClock.Stop();
+            tmrGameTime.Stop();
+            penalty = penalty * -1;
+            startTime = startTime.AddSeconds(penalty);
+            lblTime.Text = (DateTime.Now - startTime).ToString();
+            lblTimeHeading.Text = "Finished in:";
+            lblTimeHeading.ForeColor = Color.Green;
+            lblTime.ForeColor = Color.Green;
+            btnStart.Text = "Restart";
+        }
+
     } 
 }
