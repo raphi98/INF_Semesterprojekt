@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.IO;
 namespace INF_Seminararbeit
 {
     public partial class Form1 : Form, IMessageFilter
@@ -38,9 +39,11 @@ namespace INF_Seminararbeit
         bool crashSituation = false;
         bool slalomDirection = false;  //False:left true:right
         PictureBox finish;
+        TimeSpan runtime;
 
         //Cones
         int coneNumber = 7;
+        int coneNumber2 = 0;
         int coneDistance = 400;
         int indexNextCone=0;
         bool obstaclesPlaced = false;
@@ -50,6 +53,11 @@ namespace INF_Seminararbeit
         private List<Point> left = new List<Point>();
         private List<Point> right = new List<Point>();
 
+        public List<Highscore> highscoreTable = new List<Highscore>();
+        //Formatters
+        string fmtMS = "000";
+        string fmtS = "00";
+        string fmtM = "00";
         public Form1()
         {
             InitializeComponent();
@@ -57,6 +65,12 @@ namespace INF_Seminararbeit
             carStandardImage = pbCar.Image;
             this.BackColor = Color.LimeGreen;
             this.TransparencyKey = Color.LimeGreen;
+            //AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            pbCar.BackColor = Color.Transparent;
+            pbCar.Parent = pbGame;
         }
 
         ///////////////////
@@ -84,11 +98,17 @@ namespace INF_Seminararbeit
             if (pbCar.Bounds.IntersectsWith(finish.Bounds))
             {
                 Finish();
+                tmrGameTime.Enabled = false;
+                Application.RemoveMessageFilter(this);
+                Dialog1 dialog1 = new Dialog1(ref highscoreTable, coneNumber2,CarName(carStyle), runtime);
+                dialog1.ShowDialog();
+                Application.AddMessageFilter(this);
             }
         }
         private void tmrClock_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = (DateTime.Now - startTime).ToString();
+            TimeSpan time= DateTime.Now - startTime;
+            lblTime.Text = time.Minutes.ToString(fmtM) + " : " + time.Seconds.ToString(fmtS) + " : " + time.Milliseconds.ToString(fmtMS);
         }
         private void tmrBoost_Tick(object sender, EventArgs e)
         {
@@ -175,6 +195,8 @@ namespace INF_Seminararbeit
                     Size = new Size(35, 35),
                     Location = new Point(x, 100 - i * coneDistance),
                     Image = INF_Seminararbeit.Properties.Resources.cone,
+                    BackColor = Color.Transparent,
+                    Parent = pbGame,
                     SizeMode = PictureBoxSizeMode.StretchImage,   
                 };
                 if(i%2==0)
@@ -286,8 +308,16 @@ namespace INF_Seminararbeit
                 }
             }
         }
-
-
+        private String CarName(int cartype)
+        {
+            switch (cartype)
+            {
+                case 1: return "Mini";
+                case 2: return "Spider";
+                case 3: return "F1 Car";
+                default: return "No Car";
+            }
+        }
         ///////////////////////////////
         // Crash & Slalom Detection //
         //////////////////////////////
@@ -375,6 +405,7 @@ namespace INF_Seminararbeit
         //////////////////////////////
         private void btnStart_Click(object sender, EventArgs e)
         {
+            coneNumber2 = coneNumber;
             if (btnStart.Text == "Restart")
             {
                 Application.Restart();
@@ -487,12 +518,117 @@ namespace INF_Seminararbeit
             tmrGameTime.Stop();
             penalty = penalty * -1;
             startTime = startTime.AddSeconds(penalty);
-            lblTime.Text = (DateTime.Now - startTime).ToString();
+            runtime = (DateTime.Now - startTime);
+            lblTime.Text = runtime.Minutes.ToString(fmtM) + " : " + runtime.Seconds.ToString(fmtS) + " : " + runtime.Milliseconds.ToString(fmtMS);
             lblTimeHeading.Text = "Finished in:";
             lblTimeHeading.ForeColor = Color.Green;
             lblTime.ForeColor = Color.Green;
             btnStart.Text = "Restart";
         }
+        ///////////////////
+        /////  File  /////
+        //////////////////
+        
+        private String[] toArray(List<Highscore> highscore)
+        {
+            List<String> liste = new List<String>();
+            for (int i = 0; i < highscore.Count; i++)
+            {
+                liste.Add(highscore[i].Rank.ToString() + ";" +
+                          highscore[i].Time.ToString() + ";" +
+                          highscore[i].Car + ";" +
+                          highscore[i].ConeNumber.ToString() + ";" +
+                          highscore[i].Name + ";\n"
+                    );
+            }
+            return liste.ToArray();
+        }
+        private void safeFile(String filePath)
+        {
+            File.WriteAllLines(filePath, toArray(highscoreTable));
+        }
+        private void loadFile(String filePath)
+        {
+            highscoreTable.Clear();
 
-    } 
+            List<String> lines = File.ReadAllLines(filePath).ToList();
+
+            List<List<String>> parts = new List<List<string>>();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                parts.Add(lines[i].Split(';').ToList());
+            }
+
+            for (int i = 0; i < lines.Count -1; i++)
+            {
+                highscoreTable.Add(new Highscore()
+                {
+                    Rank = Convert.ToInt32(parts[i][0]),
+                    Time = TimeSpan.Parse(parts[i][1]),
+                    Car = parts[i][2],
+                    ConeNumber = Convert.ToInt32(parts[i][3]),
+                    Name = parts[i][4]
+                });
+            }
+        }
+        private void loadHighScore_Click(object sender, EventArgs e)
+        {
+            string path;
+            OpenFileDialog file = new OpenFileDialog();
+            if (file.ShowDialog() == DialogResult.OK)
+            {
+                path = file.FileName;
+                loadFile(path);
+            }
+        }
+
+        private void saveHighScore_Click(object sender, EventArgs e)
+        {
+            string path;
+            SaveFileDialog file = new SaveFileDialog();
+            file.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (file.ShowDialog() == DialogResult.OK)
+            {
+                path = file.FileName;
+                safeFile(path);
+            }
+        }
+
+        private void showHighScore_Click(object sender, EventArgs e)
+        {
+            Application.RemoveMessageFilter(this);
+            Dialog2 dialog2 = new Dialog2(ref highscoreTable);
+            dialog2.ShowDialog();
+            Application.AddMessageFilter(this);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Quit without Saving?", "Save?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.No)
+            {
+                string path;
+                SaveFileDialog file = new SaveFileDialog();
+                file.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                if (file.ShowDialog() == DialogResult.OK)
+                {
+                    path = file.FileName;
+                    safeFile(path);
+                }
+            }
+        }
+        private void ProgrammedBy()
+        {
+            string message = "This Game was Programmed by:\n Raphael Ofner & Marco Pachner\n FZT JG 2020";
+            string title = "Programmed by:";
+            MessageBox.Show(message, title);
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            ProgrammedBy();
+        }
+
+    }
 }
