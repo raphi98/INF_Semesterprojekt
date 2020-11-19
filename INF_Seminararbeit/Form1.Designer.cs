@@ -32,22 +32,18 @@ namespace INF_Seminararbeit
         {
             this.components = new System.ComponentModel.Container();
             this.panelGame = new System.Windows.Forms.Panel();
-            this.pbCar = new System.Windows.Forms.PictureBox();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.saveHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.showHighScore = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.pbStart = new System.Windows.Forms.PictureBox();
-            this.pbGame = new System.Windows.Forms.PictureBox();
             this.panelControls = new System.Windows.Forms.Panel();
             this.chbGraphics = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numCones = new System.Windows.Forms.NumericUpDown();
             this.lblBoost = new System.Windows.Forms.Label();
             this.pgbBoost = new System.Windows.Forms.ProgressBar();
-            this.pbArrow = new System.Windows.Forms.PictureBox();
             this.btnChangeCar = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTime = new System.Windows.Forms.Label();
@@ -58,46 +54,42 @@ namespace INF_Seminararbeit
             this.tmrClock = new System.Windows.Forms.Timer(this.components);
             this.tmrHitObstacle = new System.Windows.Forms.Timer(this.components);
             this.tmrBoost = new System.Windows.Forms.Timer(this.components);
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tmrBoostLock = new System.Windows.Forms.Timer(this.components);
+            this.tmrStartLights = new System.Windows.Forms.Timer(this.components);
+            this.tmrStartlightsDelete = new System.Windows.Forms.Timer(this.components);
+            this.pbArrow = new System.Windows.Forms.PictureBox();
+            this.pbStartLights = new System.Windows.Forms.PictureBox();
+            this.pbCar = new System.Windows.Forms.PictureBox();
+            this.pbStart = new System.Windows.Forms.PictureBox();
+            this.pbGame = new System.Windows.Forms.PictureBox();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.panelGame.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCar)).BeginInit();
             this.menuStripMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbStart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbGame)).BeginInit();
             this.panelControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCones)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbArrow)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbArrow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbStartLights)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbStart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbGame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelGame
             // 
             this.panelGame.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panelGame.Controls.Add(this.pbStartLights);
             this.panelGame.Controls.Add(this.pbCar);
             this.panelGame.Controls.Add(this.menuStripMain);
             this.panelGame.Controls.Add(this.pbStart);
             this.panelGame.Controls.Add(this.pbGame);
             this.panelGame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelGame.Location = new System.Drawing.Point(0, 0);
-            this.panelGame.Margin = new System.Windows.Forms.Padding(2);
+            this.panelGame.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelGame.Name = "panelGame";
             this.panelGame.Size = new System.Drawing.Size(865, 582);
             this.panelGame.TabIndex = 0;
-            // 
-            // pbCar
-            // 
-            this.pbCar.BackColor = System.Drawing.Color.Transparent;
-            this.pbCar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pbCar.Image = global::INF_Seminararbeit.Properties.Resources.car1;
-            this.pbCar.Location = new System.Drawing.Point(65, 474);
-            this.pbCar.Margin = new System.Windows.Forms.Padding(2);
-            this.pbCar.Name = "pbCar";
-            this.pbCar.Size = new System.Drawing.Size(50, 52);
-            this.pbCar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbCar.TabIndex = 1;
-            this.pbCar.TabStop = false;
             // 
             // menuStripMain
             // 
@@ -150,28 +142,6 @@ namespace INF_Seminararbeit
             this.btnAbout.Text = "About";
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
-            // pbStart
-            // 
-            this.pbStart.Image = global::INF_Seminararbeit.Properties.Resources.finishLine;
-            this.pbStart.Location = new System.Drawing.Point(0, 433);
-            this.pbStart.Margin = new System.Windows.Forms.Padding(2);
-            this.pbStart.Name = "pbStart";
-            this.pbStart.Size = new System.Drawing.Size(676, 26);
-            this.pbStart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbStart.TabIndex = 2;
-            this.pbStart.TabStop = false;
-            // 
-            // pbGame
-            // 
-            this.pbGame.BackColor = System.Drawing.Color.Transparent;
-            this.pbGame.Location = new System.Drawing.Point(0, 0);
-            this.pbGame.Margin = new System.Windows.Forms.Padding(2);
-            this.pbGame.Name = "pbGame";
-            this.pbGame.Size = new System.Drawing.Size(947, 582);
-            this.pbGame.TabIndex = 3;
-            this.pbGame.TabStop = false;
-            this.pbGame.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            // 
             // panelControls
             // 
             this.panelControls.BackColor = System.Drawing.SystemColors.ControlDark;
@@ -186,7 +156,7 @@ namespace INF_Seminararbeit
             this.panelControls.Controls.Add(this.btnStart);
             this.panelControls.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelControls.Location = new System.Drawing.Point(594, 0);
-            this.panelControls.Margin = new System.Windows.Forms.Padding(2);
+            this.panelControls.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelControls.Name = "panelControls";
             this.panelControls.Size = new System.Drawing.Size(271, 582);
             this.panelControls.TabIndex = 1;
@@ -242,29 +212,18 @@ namespace INF_Seminararbeit
             // 
             this.pgbBoost.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.pgbBoost.Location = new System.Drawing.Point(46, 438);
-            this.pgbBoost.Margin = new System.Windows.Forms.Padding(2);
+            this.pgbBoost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pgbBoost.MarqueeAnimationSpeed = 50;
             this.pgbBoost.Name = "pgbBoost";
             this.pgbBoost.Size = new System.Drawing.Size(188, 35);
             this.pgbBoost.TabIndex = 4;
             this.pgbBoost.Value = 100;
             // 
-            // pbArrow
-            // 
-            this.pbArrow.Image = global::INF_Seminararbeit.Properties.Resources.arrow_left;
-            this.pbArrow.Location = new System.Drawing.Point(83, 323);
-            this.pbArrow.Margin = new System.Windows.Forms.Padding(2);
-            this.pbArrow.Name = "pbArrow";
-            this.pbArrow.Size = new System.Drawing.Size(118, 71);
-            this.pbArrow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbArrow.TabIndex = 3;
-            this.pbArrow.TabStop = false;
-            // 
             // btnChangeCar
             // 
             this.btnChangeCar.Font = new System.Drawing.Font("Calibri Light", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChangeCar.Location = new System.Drawing.Point(46, 182);
-            this.btnChangeCar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnChangeCar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnChangeCar.Name = "btnChangeCar";
             this.btnChangeCar.Size = new System.Drawing.Size(188, 42);
             this.btnChangeCar.TabIndex = 2;
@@ -282,7 +241,7 @@ namespace INF_Seminararbeit
             this.tableLayoutPanel1.Controls.Add(this.lblTimeHeading, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblPenalty, 0, 2);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(46, 29);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.4898F));
@@ -333,7 +292,7 @@ namespace INF_Seminararbeit
             // 
             this.btnStart.Font = new System.Drawing.Font("Calibri Light", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStart.Location = new System.Drawing.Point(46, 508);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(2);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(188, 55);
             this.btnStart.TabIndex = 0;
@@ -366,6 +325,73 @@ namespace INF_Seminararbeit
             this.tmrBoostLock.Interval = 5000;
             this.tmrBoostLock.Tick += new System.EventHandler(this.tmrBoostLock_Tick);
             // 
+            // tmrStartLights
+            // 
+            this.tmrStartLights.Interval = 3550;
+            this.tmrStartLights.Tick += new System.EventHandler(this.tmrStartLights_Tick);
+            // 
+            // tmrStartlightsDelete
+            // 
+            this.tmrStartlightsDelete.Interval = 5300;
+            this.tmrStartlightsDelete.Tick += new System.EventHandler(this.tmrStartlightsDelete_Tick);
+            // 
+            // pbArrow
+            // 
+            this.pbArrow.Image = global::INF_Seminararbeit.Properties.Resources.arrow_left;
+            this.pbArrow.Location = new System.Drawing.Point(83, 323);
+            this.pbArrow.Margin = new System.Windows.Forms.Padding(2);
+            this.pbArrow.Name = "pbArrow";
+            this.pbArrow.Size = new System.Drawing.Size(118, 71);
+            this.pbArrow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbArrow.TabIndex = 3;
+            this.pbArrow.TabStop = false;
+            // 
+            // pbStartLights
+            // 
+            this.pbStartLights.BackColor = System.Drawing.Color.Transparent;
+            this.pbStartLights.Image = global::INF_Seminararbeit.Properties.Resources.Startlights_animated;
+            this.pbStartLights.Location = new System.Drawing.Point(154, 59);
+            this.pbStartLights.Name = "pbStartLights";
+            this.pbStartLights.Size = new System.Drawing.Size(240, 145);
+            this.pbStartLights.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbStartLights.TabIndex = 5;
+            this.pbStartLights.TabStop = false;
+            // 
+            // pbCar
+            // 
+            this.pbCar.BackColor = System.Drawing.Color.Transparent;
+            this.pbCar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pbCar.Image = global::INF_Seminararbeit.Properties.Resources.car1;
+            this.pbCar.Location = new System.Drawing.Point(65, 474);
+            this.pbCar.Margin = new System.Windows.Forms.Padding(2);
+            this.pbCar.Name = "pbCar";
+            this.pbCar.Size = new System.Drawing.Size(50, 52);
+            this.pbCar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbCar.TabIndex = 1;
+            this.pbCar.TabStop = false;
+            // 
+            // pbStart
+            // 
+            this.pbStart.Image = global::INF_Seminararbeit.Properties.Resources.finishLine;
+            this.pbStart.Location = new System.Drawing.Point(0, 433);
+            this.pbStart.Margin = new System.Windows.Forms.Padding(2);
+            this.pbStart.Name = "pbStart";
+            this.pbStart.Size = new System.Drawing.Size(676, 26);
+            this.pbStart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbStart.TabIndex = 2;
+            this.pbStart.TabStop = false;
+            // 
+            // pbGame
+            // 
+            this.pbGame.BackColor = System.Drawing.Color.Transparent;
+            this.pbGame.Location = new System.Drawing.Point(0, 0);
+            this.pbGame.Margin = new System.Windows.Forms.Padding(2);
+            this.pbGame.Name = "pbGame";
+            this.pbGame.Size = new System.Drawing.Size(947, 582);
+            this.pbGame.TabIndex = 3;
+            this.pbGame.TabStop = false;
+            this.pbGame.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,24 +402,25 @@ namespace INF_Seminararbeit
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.menuStripMain;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelGame.ResumeLayout(false);
             this.panelGame.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbCar)).EndInit();
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbStart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbGame)).EndInit();
             this.panelControls.ResumeLayout(false);
             this.panelControls.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCones)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbArrow)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbArrow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbStartLights)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbStart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbGame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
@@ -430,6 +457,9 @@ namespace INF_Seminararbeit
         private CheckBox chbGraphics;
         private BindingSource bindingSource1;
         private Timer tmrBoostLock;
+        private PictureBox pbStartLights;
+        private Timer tmrStartLights;
+        private Timer tmrStartlightsDelete;
     }
 }
 

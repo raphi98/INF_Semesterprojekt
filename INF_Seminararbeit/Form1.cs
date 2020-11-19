@@ -85,14 +85,19 @@ namespace INF_Seminararbeit
                    75.0f / 480.0f,
                    0.0f,
                    0.0f);
-            //AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+            pbStartLights.Enabled = false;
+            pbStartLights.Visible = false;
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             pbCar.BackColor = Color.Transparent;
+            pbStartLights.BackColor = Color.Transparent;
             pbCar.Parent = pbGame;
+            pbStartLights.Parent = pbGame;
             pbStart.Parent = pbGame;
             pbCar.BringToFront();
+            pbStartLights.Parent = pbGame;
         }
 
 
@@ -161,6 +166,49 @@ namespace INF_Seminararbeit
             tmrHitObstacle.Enabled = false;
             pgbBoost.Value = 100;
         }
+        private void tmrStartLights_Tick(object sender, EventArgs e)
+        {
+            tmrStartLights.Enabled = false;
+            
+            if (isRunning)
+            {
+                if (restart)
+                {
+                    tmrClock.Start();
+                    obstacleSpeed = obstacleSpeed_tmp;
+                    carSpeed = carSpeed_tmp;
+                    btnStart.Text = "Pause";
+                    restart = false;
+                }
+                else
+                {
+                    obstacleSpeed_tmp = obstacleSpeed;
+                    carSpeed_tmp = carSpeed;
+                    obstacleSpeed = 0;
+                    carSpeed = 0;
+                    tmrClock.Stop();
+                    btnStart.Text = "Resume";
+                    restart = true;
+                }
+            }
+            else
+            {
+                coneNumber2 = coneNumber;
+                startTime = DateTime.Now;
+                tmrGameTime.Start();
+                placeObstacles();
+                tmrClock.Start();
+                isRunning = true;
+                btnStart.Text = "Pause";
+            }
+        }
+        private void tmrStartlightsDelete_Tick(object sender, EventArgs e)
+        {
+            pbStartLights.Enabled = false;
+            pbStartLights.Visible = false;
+            tmrStartlightsDelete.Enabled = false;
+        }
+
 
 
         ////////////////////////
@@ -453,45 +501,53 @@ namespace INF_Seminararbeit
         //////////////////////////////
         private void btnStart_Click(object sender, EventArgs e)
         {
-            
-            if (btnStart.Text == "Restart")
+            if(isRunning==false || btnStart.Text == "Resume")
             {
-                //Application.Restart();
-                //Environment.Exit(0);
-                resetGame();
-                return;
-            }
-            if (isRunning)
-            {
-                if (restart)
-                {
-                    tmrClock.Start();
-                    obstacleSpeed = obstacleSpeed_tmp;
-                    carSpeed = carSpeed_tmp;
-                    btnStart.Text = "Pause";
-                    restart = false;
-                }
-                else
-                {
-                    obstacleSpeed_tmp = obstacleSpeed;
-                    carSpeed_tmp = carSpeed;
-                    obstacleSpeed = 0;
-                    carSpeed = 0;
-                    tmrClock.Stop();
-                    btnStart.Text = "Resume";
-                    restart = true;
-                }
+                StartLights();
             }
             else
             {
-                coneNumber2 = coneNumber;
-                startTime = DateTime.Now;
-                tmrGameTime.Start();
-                placeObstacles();
-                tmrClock.Start();
-                isRunning = true;
-                btnStart.Text = "Pause";
+                if (btnStart.Text == "Restart")
+                {
+                    //Application.Restart();
+                    //Environment.Exit(0);
+                    resetGame();
+                    return;
+                }
+                if (isRunning)
+                {
+                    if (restart)
+                    {
+                        tmrClock.Start();
+                        obstacleSpeed = obstacleSpeed_tmp;
+                        carSpeed = carSpeed_tmp;
+                        btnStart.Text = "Pause";
+                        restart = false;
+                    }
+                    else
+                    {
+                        obstacleSpeed_tmp = obstacleSpeed;
+                        carSpeed_tmp = carSpeed;
+                        obstacleSpeed = 0;
+                        carSpeed = 0;
+                        tmrClock.Stop();
+                        btnStart.Text = "Resume";
+                        restart = true;
+                    }
+                }
+                else
+                {
+                    coneNumber2 = coneNumber;
+                    startTime = DateTime.Now;
+                    tmrGameTime.Start();
+                    placeObstacles();
+                    tmrClock.Start();
+                    isRunning = true;
+                    btnStart.Text = "Pause";
+                }
             }
+            
+
         }
         private void btnChangeCar_Click(object sender, EventArgs e)
         {
@@ -753,6 +809,15 @@ namespace INF_Seminararbeit
             {
                 pbGame.Image = null;
             }
+        }
+        private void StartLights()
+        {
+
+            pbStartLights.Enabled = true;
+            pbStartLights.Visible = true;      
+            
+            tmrStartLights.Enabled = true;
+            tmrStartlightsDelete.Enabled = true;
         }
 
 

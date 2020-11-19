@@ -39,34 +39,37 @@
             this.dgvHighscore.AllowUserToDeleteRows = false;
             this.dgvHighscore.AllowUserToOrderColumns = true;
             this.dgvHighscore.AllowUserToResizeColumns = false;
+            this.dgvHighscore.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvHighscore.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.dgvHighscore.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHighscore.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHighscore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvHighscore.Location = new System.Drawing.Point(0, 0);
-            this.dgvHighscore.Margin = new System.Windows.Forms.Padding(8);
+            this.dgvHighscore.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.dgvHighscore.Name = "dgvHighscore";
             this.dgvHighscore.ReadOnly = true;
+            this.dgvHighscore.RowHeadersVisible = false;
             this.dgvHighscore.RowHeadersWidth = 51;
-            this.dgvHighscore.Size = new System.Drawing.Size(1240, 817);
+            this.dgvHighscore.Size = new System.Drawing.Size(984, 665);
             this.dgvHighscore.TabIndex = 0;
             // 
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 807);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6);
+            this.panel1.Location = new System.Drawing.Point(0, 655);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1240, 10);
+            this.panel1.Size = new System.Drawing.Size(984, 10);
             this.panel1.TabIndex = 1;
             // 
             // Dialog2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1240, 817);
+            this.ClientSize = new System.Drawing.Size(984, 665);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgvHighscore);
-            this.Margin = new System.Windows.Forms.Padding(6);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Dialog2";
             this.Text = "Dialog2";
             ((System.ComponentModel.ISupportInitialize)(this.dgvHighscore)).EndInit();

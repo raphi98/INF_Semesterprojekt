@@ -65,5 +65,6 @@ namespace INF_Seminararbeit
                 highscoreLocal.Add(sorted[i]);
             }
         }
+
     }
 }

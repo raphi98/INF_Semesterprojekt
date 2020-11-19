@@ -106,6 +106,8 @@
     <None Include="Resources\cone.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Startlights_animated.gif" />
+    <None Include="Resources\StartLights.gif" />
     <None Include="Resources\grass.png" />
     <None Include="Resources\arrow_left.png" />
     <None Include="Resources\arrow.png" />
