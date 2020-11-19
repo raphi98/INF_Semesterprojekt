@@ -86,16 +86,16 @@ namespace INF_Seminararbeit
             this.panelGame.Controls.Add(this.pbGame);
             this.panelGame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelGame.Location = new System.Drawing.Point(0, 0);
-            this.panelGame.Margin = new System.Windows.Forms.Padding(2);
             this.panelGame.Name = "panelGame";
-            this.panelGame.Size = new System.Drawing.Size(865, 582);
+            this.panelGame.Size = new System.Drawing.Size(1298, 895);
             this.panelGame.TabIndex = 0;
             // 
             // pbStartLights
             // 
             this.pbStartLights.BackColor = System.Drawing.Color.Transparent;
             this.pbStartLights.Image = global::INF_Seminararbeit.Properties.Resources.Startlights_animated;
-            this.pbStartLights.Location = new System.Drawing.Point(154, 59);
+            this.pbStartLights.Location = new System.Drawing.Point(231, 91);
+            this.pbStartLights.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pbStartLights.Name = "pbStartLights";
             this.pbStartLights.Size = new System.Drawing.Size(240, 145);
             this.pbStartLights.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -107,10 +107,9 @@ namespace INF_Seminararbeit
             this.pbCar.BackColor = System.Drawing.Color.Transparent;
             this.pbCar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbCar.Image = global::INF_Seminararbeit.Properties.Resources.car1;
-            this.pbCar.Location = new System.Drawing.Point(65, 474);
-            this.pbCar.Margin = new System.Windows.Forms.Padding(2);
+            this.pbCar.Location = new System.Drawing.Point(98, 729);
             this.pbCar.Name = "pbCar";
-            this.pbCar.Size = new System.Drawing.Size(50, 52);
+            this.pbCar.Size = new System.Drawing.Size(75, 80);
             this.pbCar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbCar.TabIndex = 1;
             this.pbCar.TabStop = false;
@@ -123,8 +122,8 @@ namespace INF_Seminararbeit
             this.btnAbout});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.menuStripMain.Size = new System.Drawing.Size(865, 24);
+            this.menuStripMain.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStripMain.Size = new System.Drawing.Size(1298, 24);
             this.menuStripMain.TabIndex = 4;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -135,7 +134,7 @@ namespace INF_Seminararbeit
             this.saveHighScore,
             this.showHighScore});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuItem1.Text = "File";
             // 
             // openHighScore
@@ -162,17 +161,16 @@ namespace INF_Seminararbeit
             // btnAbout
             // 
             this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(52, 22);
+            this.btnAbout.Size = new System.Drawing.Size(52, 20);
             this.btnAbout.Text = "About";
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // pbStart
             // 
             this.pbStart.Image = global::INF_Seminararbeit.Properties.Resources.finishLine;
-            this.pbStart.Location = new System.Drawing.Point(0, 433);
-            this.pbStart.Margin = new System.Windows.Forms.Padding(2);
+            this.pbStart.Location = new System.Drawing.Point(0, 666);
             this.pbStart.Name = "pbStart";
-            this.pbStart.Size = new System.Drawing.Size(676, 26);
+            this.pbStart.Size = new System.Drawing.Size(1014, 40);
             this.pbStart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbStart.TabIndex = 2;
             this.pbStart.TabStop = false;
@@ -181,9 +179,8 @@ namespace INF_Seminararbeit
             // 
             this.pbGame.BackColor = System.Drawing.Color.Transparent;
             this.pbGame.Location = new System.Drawing.Point(0, 0);
-            this.pbGame.Margin = new System.Windows.Forms.Padding(2);
             this.pbGame.Name = "pbGame";
-            this.pbGame.Size = new System.Drawing.Size(947, 582);
+            this.pbGame.Size = new System.Drawing.Size(1420, 895);
             this.pbGame.TabIndex = 3;
             this.pbGame.TabStop = false;
             this.pbGame.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -201,17 +198,17 @@ namespace INF_Seminararbeit
             this.panelControls.Controls.Add(this.tableLayoutPanel1);
             this.panelControls.Controls.Add(this.btnStart);
             this.panelControls.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelControls.Location = new System.Drawing.Point(594, 0);
-            this.panelControls.Margin = new System.Windows.Forms.Padding(2);
+            this.panelControls.Location = new System.Drawing.Point(892, 0);
             this.panelControls.Name = "panelControls";
-            this.panelControls.Size = new System.Drawing.Size(271, 582);
+            this.panelControls.Size = new System.Drawing.Size(406, 895);
             this.panelControls.TabIndex = 1;
             // 
             // chbGraphics
             // 
             this.chbGraphics.AutoSize = true;
             this.chbGraphics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbGraphics.Location = new System.Drawing.Point(59, 288);
+            this.chbGraphics.Location = new System.Drawing.Point(88, 443);
+            this.chbGraphics.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chbGraphics.Name = "chbGraphics";
             this.chbGraphics.Size = new System.Drawing.Size(172, 20);
             this.chbGraphics.TabIndex = 7;
@@ -223,7 +220,8 @@ namespace INF_Seminararbeit
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(56, 247);
+            this.label1.Location = new System.Drawing.Point(84, 380);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 6;
@@ -231,9 +229,10 @@ namespace INF_Seminararbeit
             // 
             // numCones
             // 
-            this.numCones.Location = new System.Drawing.Point(140, 247);
+            this.numCones.Location = new System.Drawing.Point(210, 380);
+            this.numCones.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numCones.Name = "numCones";
-            this.numCones.Size = new System.Drawing.Size(94, 20);
+            this.numCones.Size = new System.Drawing.Size(141, 26);
             this.numCones.TabIndex = 5;
             this.numCones.Value = new decimal(new int[] {
             7,
@@ -247,8 +246,7 @@ namespace INF_Seminararbeit
             this.lblBoost.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblBoost.AutoSize = true;
             this.lblBoost.Font = new System.Drawing.Font("Calibri Light", 22.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBoost.Location = new System.Drawing.Point(96, 396);
-            this.lblBoost.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblBoost.Location = new System.Drawing.Point(144, 609);
             this.lblBoost.Name = "lblBoost";
             this.lblBoost.Size = new System.Drawing.Size(87, 37);
             this.lblBoost.TabIndex = 3;
@@ -257,21 +255,19 @@ namespace INF_Seminararbeit
             // pgbBoost
             // 
             this.pgbBoost.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.pgbBoost.Location = new System.Drawing.Point(46, 438);
-            this.pgbBoost.Margin = new System.Windows.Forms.Padding(2);
+            this.pgbBoost.Location = new System.Drawing.Point(69, 674);
             this.pgbBoost.MarqueeAnimationSpeed = 50;
             this.pgbBoost.Name = "pgbBoost";
-            this.pgbBoost.Size = new System.Drawing.Size(188, 35);
+            this.pgbBoost.Size = new System.Drawing.Size(282, 54);
             this.pgbBoost.TabIndex = 4;
             this.pgbBoost.Value = 100;
             // 
             // pbArrow
             // 
             this.pbArrow.Image = global::INF_Seminararbeit.Properties.Resources.arrow_left;
-            this.pbArrow.Location = new System.Drawing.Point(83, 323);
-            this.pbArrow.Margin = new System.Windows.Forms.Padding(2);
+            this.pbArrow.Location = new System.Drawing.Point(124, 497);
             this.pbArrow.Name = "pbArrow";
-            this.pbArrow.Size = new System.Drawing.Size(118, 71);
+            this.pbArrow.Size = new System.Drawing.Size(177, 109);
             this.pbArrow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbArrow.TabIndex = 3;
             this.pbArrow.TabStop = false;
@@ -279,10 +275,9 @@ namespace INF_Seminararbeit
             // btnChangeCar
             // 
             this.btnChangeCar.Font = new System.Drawing.Font("Calibri Light", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeCar.Location = new System.Drawing.Point(46, 182);
-            this.btnChangeCar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnChangeCar.Location = new System.Drawing.Point(69, 280);
             this.btnChangeCar.Name = "btnChangeCar";
-            this.btnChangeCar.Size = new System.Drawing.Size(188, 42);
+            this.btnChangeCar.Size = new System.Drawing.Size(282, 65);
             this.btnChangeCar.TabIndex = 2;
             this.btnChangeCar.Text = "Car Model: 1";
             this.btnChangeCar.UseVisualStyleBackColor = true;
@@ -297,14 +292,13 @@ namespace INF_Seminararbeit
             this.tableLayoutPanel1.Controls.Add(this.lblTime, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblTimeHeading, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblPenalty, 0, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(46, 29);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(69, 45);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.4898F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.5102F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(188, 135);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(282, 208);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // lblTime
@@ -312,8 +306,7 @@ namespace INF_Seminararbeit
             this.lblTime.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("Calibri Light", 22.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(6, 48);
-            this.lblTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTime.Location = new System.Drawing.Point(53, 84);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(176, 37);
             this.lblTime.TabIndex = 2;
@@ -325,8 +318,7 @@ namespace INF_Seminararbeit
             this.lblTimeHeading.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTimeHeading.AutoSize = true;
             this.lblTimeHeading.Font = new System.Drawing.Font("Calibri Light", 22.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTimeHeading.Location = new System.Drawing.Point(55, 3);
-            this.lblTimeHeading.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTimeHeading.Location = new System.Drawing.Point(102, 15);
             this.lblTimeHeading.Name = "lblTimeHeading";
             this.lblTimeHeading.Size = new System.Drawing.Size(78, 37);
             this.lblTimeHeading.TabIndex = 1;
@@ -338,8 +330,7 @@ namespace INF_Seminararbeit
             this.lblPenalty.AutoSize = true;
             this.lblPenalty.Font = new System.Drawing.Font("Calibri Light", 22.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPenalty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblPenalty.Location = new System.Drawing.Point(20, 93);
-            this.lblPenalty.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPenalty.Location = new System.Drawing.Point(67, 154);
             this.lblPenalty.Name = "lblPenalty";
             this.lblPenalty.Size = new System.Drawing.Size(148, 37);
             this.lblPenalty.TabIndex = 2;
@@ -348,10 +339,9 @@ namespace INF_Seminararbeit
             // btnStart
             // 
             this.btnStart.Font = new System.Drawing.Font("Calibri Light", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(46, 508);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(2);
+            this.btnStart.Location = new System.Drawing.Point(69, 782);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(188, 55);
+            this.btnStart.Size = new System.Drawing.Size(282, 85);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -379,7 +369,7 @@ namespace INF_Seminararbeit
             // 
             // tmrBoostLock
             // 
-            this.tmrBoostLock.Interval = 3000;
+            this.tmrBoostLock.Interval = 5000;
             this.tmrBoostLock.Tick += new System.EventHandler(this.tmrBoostLock_Tick);
             // 
             // tmrStartLights
@@ -394,15 +384,14 @@ namespace INF_Seminararbeit
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 582);
+            this.ClientSize = new System.Drawing.Size(1298, 895);
             this.Controls.Add(this.panelControls);
             this.Controls.Add(this.panelGame);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.menuStripMain;
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

@@ -164,6 +164,7 @@ namespace INF_Seminararbeit
             carSpeedMax = carSpeedMaxMerker;
             carSpeedMaxMerker = 0;
             tmrHitObstacle.Enabled = false;
+            pgbBoost.Value = 100;
         }
         private void tmrStartLights_Tick(object sender, EventArgs e)
         {
@@ -245,7 +246,7 @@ namespace INF_Seminararbeit
 
             if (m.Msg == WM_KEYDOWN && keyCode == Keys.N)
             {
-                if(!crashSituation && carSpeedBoostMerker == 0)
+                if(!crashSituation && pgbBoost.Value == 100)
                 {
                     carSpeedBoostMaxMerker = carSpeedMax;
                     carSpeedBoostMerker = carSpeed;
@@ -660,32 +661,58 @@ namespace INF_Seminararbeit
         }
         private void safeFile(String filePath)
         {
-            File.WriteAllLines(filePath, toArray(highscoreTable));
+            try
+            {
+                File.WriteAllLines(filePath, toArray(highscoreTable));
+                string message = "File succesfully saved";
+                string title = "Message";
+                MessageBox.Show(message, title);
+            }
+            catch
+            {
+                string message = "Error while writing to file";
+                string title = "Error:";
+                MessageBox.Show(message, title);
+            }
+
         }
         private void loadFile(String filePath)
         {
-            highscoreTable.Clear();
-
-            List<String> lines = File.ReadAllLines(filePath).ToList();
-
-            List<List<String>> parts = new List<List<string>>();
-
-            for (int i = 0; i < lines.Count; i++)
+            try
             {
-                parts.Add(lines[i].Split(';').ToList());
-            }
+                highscoreTable.Clear();
 
-            for (int i = 0; i <= lines.Count -1; i++)
-            {
-                highscoreTable.Add(new Highscore()
+                List<String> lines = File.ReadAllLines(filePath).ToList();
+
+                List<List<String>> parts = new List<List<string>>();
+
+                for (int i = 0; i < lines.Count; i++)
                 {
-                    Rank = Convert.ToInt32(parts[i][0]),
-                    Time = TimeSpan.Parse(parts[i][1]),
-                    Car = parts[i][2],
-                    ConeNumber = Convert.ToInt32(parts[i][3]),
-                    Name = parts[i][4]
-                });
+                    parts.Add(lines[i].Split(';').ToList());
+                }
+
+                for (int i = 0; i <= lines.Count - 1; i++)
+                {
+                    highscoreTable.Add(new Highscore()
+                    {
+                        Rank = Convert.ToInt32(parts[i][0]),
+                        Time = TimeSpan.Parse(parts[i][1]),
+                        Car = parts[i][2],
+                        ConeNumber = Convert.ToInt32(parts[i][3]),
+                        Name = parts[i][4]
+                    });
+                }
+                string message = "File succesfully loaded";
+                string title = "Message";
+                MessageBox.Show(message, title);
             }
+            catch
+            {
+                string message = "Error while loading file";
+                string title = "Error:";
+                MessageBox.Show(message, title);
+            }
+            
         }
         private void loadHighScore_Click(object sender, EventArgs e)
         {
