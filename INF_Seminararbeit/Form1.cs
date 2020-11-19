@@ -164,7 +164,6 @@ namespace INF_Seminararbeit
             carSpeedMax = carSpeedMaxMerker;
             carSpeedMaxMerker = 0;
             tmrHitObstacle.Enabled = false;
-            pgbBoost.Value = 100;
         }
         private void tmrStartLights_Tick(object sender, EventArgs e)
         {
