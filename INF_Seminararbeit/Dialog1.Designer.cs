@@ -47,18 +47,16 @@
             this.panel1.Controls.Add(this.lblTime);
             this.panel1.Controls.Add(this.btnEnterScore);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 673);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panel1.Location = new System.Drawing.Point(0, 437);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(984, 192);
+            this.panel1.Size = new System.Drawing.Size(784, 125);
             this.panel1.TabIndex = 1;
             // 
             // lblConeNumber
             // 
             this.lblConeNumber.AutoSize = true;
             this.lblConeNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConeNumber.Location = new System.Drawing.Point(345, 65);
-            this.lblConeNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblConeNumber.Location = new System.Drawing.Point(230, 42);
             this.lblConeNumber.Name = "lblConeNumber";
             this.lblConeNumber.Size = new System.Drawing.Size(52, 16);
             this.lblConeNumber.TabIndex = 4;
@@ -67,10 +65,9 @@
             // tbName
             // 
             this.tbName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbName.Location = new System.Drawing.Point(453, 60);
-            this.tbName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbName.Location = new System.Drawing.Point(302, 39);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(262, 22);
+            this.tbName.Size = new System.Drawing.Size(176, 22);
             this.tbName.TabIndex = 3;
             this.tbName.Text = "Name";
             // 
@@ -78,8 +75,7 @@
             // 
             this.lblCar.AutoSize = true;
             this.lblCar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCar.Location = new System.Drawing.Point(206, 65);
-            this.lblCar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCar.Location = new System.Drawing.Point(137, 42);
             this.lblCar.Name = "lblCar";
             this.lblCar.Size = new System.Drawing.Size(32, 16);
             this.lblCar.TabIndex = 2;
@@ -89,8 +85,7 @@
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(37, 65);
-            this.lblTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTime.Location = new System.Drawing.Point(25, 42);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(43, 16);
             this.lblTime.TabIndex = 1;
@@ -99,10 +94,9 @@
             // btnEnterScore
             // 
             this.btnEnterScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEnterScore.Location = new System.Drawing.Point(741, 59);
-            this.btnEnterScore.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnEnterScore.Location = new System.Drawing.Point(494, 38);
             this.btnEnterScore.Name = "btnEnterScore";
-            this.btnEnterScore.Size = new System.Drawing.Size(174, 35);
+            this.btnEnterScore.Size = new System.Drawing.Size(116, 23);
             this.btnEnterScore.TabIndex = 0;
             this.btnEnterScore.Text = "enter score";
             this.btnEnterScore.UseVisualStyleBackColor = true;
@@ -115,21 +109,19 @@
             this.dgvHighscore.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHighscore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvHighscore.Location = new System.Drawing.Point(0, 0);
-            this.dgvHighscore.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgvHighscore.Name = "dgvHighscore";
             this.dgvHighscore.RowHeadersVisible = false;
             this.dgvHighscore.RowHeadersWidth = 82;
-            this.dgvHighscore.Size = new System.Drawing.Size(984, 673);
+            this.dgvHighscore.Size = new System.Drawing.Size(784, 437);
             this.dgvHighscore.TabIndex = 2;
             // 
             // Dialog1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 865);
+            this.ClientSize = new System.Drawing.Size(784, 562);
             this.Controls.Add(this.dgvHighscore);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Dialog1";
             this.Text = "Dialog1";
             this.panel1.ResumeLayout(false);
